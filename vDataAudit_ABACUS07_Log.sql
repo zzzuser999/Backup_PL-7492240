@@ -1,0 +1,26 @@
+DECLARE @TIMESET DATETIME = '2020-06-30 00:00:00.001';
+DECLARE @USER NVARCHAR(256) = 'PLSYGAL';
+SELECT [LogDateStr]
+      ,[LogTimeStr]
+      ,[ScenarioName]
+      ,[YearName]
+      ,[PeriodName]
+      ,[EntityName]
+      ,[ParentID]
+      ,[ValueID]
+      ,[ValueName]
+      ,[AccountName]
+      ,[ICPName]
+      ,[Custom1Name]
+      ,[Custom2Name]
+      ,[Custom3Name]
+      ,[Custom4Name]
+      ,*/[UserName]
+      ,[ServerName]
+      ,[ActivityID]
+      ,[DataValue]
+      ,[bNoData]
+      ,[LogDate]
+  FROM [fm_prod_readerviews].[dbo].[vDataAudit_ABACUS07_Log]
+  WHERE [UserName] LIKE '%' + @USER + '%' AND [LogDate] > @TIMESET
+  ORDER BY [LogDate] DESC

@@ -1,0 +1,7 @@
+USE [fm_prod_readerviews];
+GO
+
+
+SELECT * 
+FROM   INFORMATION_SCHEMA.VIEWS 
+WHERE  VIEW_DEFINITION like '%ABACUS09%'

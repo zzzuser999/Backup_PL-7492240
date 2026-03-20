@@ -1,0 +1,28 @@
+USE [PRD_EA];
+GO
+
+ declare @Table Varchar(200)
+
+    declare cur1 cursor for
+    SELECT TABLE_SCHEMA + '.' + TABLE_NAME
+    FROM INFORMATION_SCHEMA.TABLES
+    WHERE  TABLE_NAME like 'AA%' /* Select only tables related to Analyzer extracts */  and  TABLE_TYPE = 'BASE TABLE'
+	--ORDER TABLE_NAME 
+
+    open cur1
+    fetch next from cur1 into @Table
+
+    while @@FETCH_STATUS <> -1
+    begin
+            declare @sql nvarchar(max);
+			set @sql = 'TRUNCATE TABLE [Table]';
+			set @sql = replace(@sql, '[Table]', @table);
+			PRINT 'Executing: ' + @sql
+			exec sp_executesql @sql;
+			PRINT 'Done.' 
+			
+        fetch next from cur1 into @Table
+    end
+
+    close cur1
+    deallocate cur1
